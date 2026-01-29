@@ -12,48 +12,52 @@ Some of Adam’s advantages are:
 4. It works with sparse gradients
 5. It naturally performs a form of step size annealing
 
-[Pseudocode figure from Kingma and Ba 2015](https://github.com/UMT-CSCI-557/optimizers/blob/main/Pseudocode.png)
+<img width="857" height="536" alt="Pseudocode" src="https://github.com/user-attachments/assets/2747908d-794b-4833-ae26-cd9a42447748" />
 
 <br>
 
 ## Moments
 
-First moment ($$𝑚_𝑡$$): the mean of the gradient
+The first moment ($$𝑚_𝑡$$) is the **mean** of the gradient.
 
 $$𝑚_𝑡= {\beta _1} ⋅ m_{𝑡−1}+(1 − {\beta _1})⋅ 𝑔_𝑡$$
 
-Second moment ($$𝑣_𝑡$$): the raw, uncentered variance of the gradient
+The second moment ($$𝑣_𝑡$$) is the **raw, uncentered variance** of the gradient.
 
 $$𝑣_𝑡= 𝛽_2 ⋅ 𝑣_{𝑡−1} + (1 − {\beta_2})⋅ 𝑔_𝑡^2$$
 
-βs (decay rates) give more weight to recent gradients
+The βs (decay rates) give more weight to recent gradients.
 
-However, these moments are **BIASED** early on because they are initialized at 0
+<br>
 
-Hence, we have to correct the bias
+However, these moments are **BIASED** early on because they are initialized at 0.
+
+Hence, we have to correct the bias:
 
 $$\hat{𝑚_𝑡}= 𝑚_𝑡∕(1 − {\beta_1^𝑡})$$ 
 $$\hat{𝑣_𝑡}= 𝑣_𝑡∕(1 − {\beta_2^𝑡})$$ 
 
+<br>
+
 But where does this bias correction come from?
 
-First, we rewrite the moment as a function of all previous gradients.
+First, we rewrite the moment as a function of all previous gradients:
 
 $$𝑣_𝑡 = (1 − {\beta _2}) \sum_{𝑖=1}^𝑡 {\beta_2^{𝑡 −1}} ⋅ 𝑔_𝑖^2$$
 
-We are trying to find the *expected* value of the gradient.
+We are trying to find the *expected* value of the moment.
 
 $$𝔼[𝑣_𝑡] = 𝔼[(1 − {\beta _2}) \sum_{𝑖=1}^𝑡 {\beta_2^{𝑡 −1}} ⋅ 𝑔_𝑖^2]$$
 
-Next, we assume that the gradient is constant.
+Next, we assume that the gradient is stationary.
 
 $$𝔼[𝑣_𝑡] = 𝔼[𝑔_𝑖^2] ⋅ (1 − {\beta _2}) \sum_{𝑖=1}^𝑡 {\beta_2^{𝑡 −1}} + \zeta$$
 
-What the paper fails to make explicit is that the summation here is actually a **geometric series** (i.e., when summing those values, sequential terms are related to each other by a specific ratio, in this case, $\frac{1}{\beta}$). These two terms are equivalent:
+What the paper fails to make explicit is that the summation here is actually a **geometric series** (i.e., when summing those values, sequential terms are related to each other by a common ratio, in this case, ${\beta_2}$). The summation can also be written as:
 
 $$\sum_{𝑖=1}^𝑡 {\beta_2^{𝑡 −1}} = \frac{1 − {\beta_2^𝑡}}{1 − {\beta_2}}$$
 
-Therefore, we can sub in the ratio $\frac{1 − {\beta_2^𝑡}}{1 − {\beta_2}}$ for the summation.
+Therefore, we can sub in $\frac{1 − {\beta_2^𝑡}}{1 − {\beta_2}}$ for the summation.
 
 $$𝔼[𝑣_𝑡] = 𝔼[𝑔_𝑖^2] ⋅ (1 − {\beta _2}) \frac{1 − {\beta_2^𝑡}}{1 − {\beta_2}} + \zeta$$
 
