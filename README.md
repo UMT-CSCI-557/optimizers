@@ -12,7 +12,7 @@ Some of Adam’s advantages are:
 4. It works with sparse gradients
 5. It naturally performs a form of step size annealing
 
-(Insert pseudocode picture here)
+[Pseudocode figure from Kingma and Ba 2015](https://github.com/UMT-CSCI-557/optimizers/blob/main/Pseudocode.png)
 
 <br>
 
