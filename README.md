@@ -64,24 +64,23 @@ If you want to take N steps to the optimum that is D distance away, then 𝛼 �
 
 The effective step sizes are approximately bound to the step size hyperparameter such that :
 
-|Δ_𝑡 |≤{█(𝛼 ·(1 − 𝛽_1 )∕√(1 − 𝛽_2 ),  (1 − 𝛽_1 )>√(1 − 𝛽_2 )@&𝛼,                                             (1 − 𝛽_1 )≤√(1 − 𝛽_2 ))┤
+$$\abs{{\delta_𝑡} ≤{(𝛼 ·(1 − 𝛽_1 )∕√(1 − 𝛽_2 ),  
+(1 − 𝛽_1 )>√(1 − 𝛽_2 )@&𝛼, (1 − 𝛽_1 )≤√(1 − 𝛽_2 ))┤
                      
 					      
 Therefore, the step size will not grow too large except in the case of severe sparsity (when a gradient has been zero at all timesteps except at the current timestep)
 
-𝑚 ̂_𝑡∕√(𝑣 ̂_𝑡 ) is considered to be a signal-to-noise ratio (SNR)
-When SNR is small, the step size decreases
-SNR typically decreases when approaching an optimum, where we want smaller effective steps
+$\frac{\hat{𝑚_𝑡}}{\sqrt{\hat{𝑣_𝑡}}}$ is considered to be a signal-to-noise ratio (SNR). When SNR is small, the step size decreases. SNR typically decreases when approaching an optimum, where we want smaller effective steps.
 
 Since the final step equation divides the estimated mean by the estimated variance (1st moment / 2nd moment), any gradient scaling cancels out​
 
-〖(𝑐 ⋅ 𝑚 ̂_𝑡)〗∕〖√((𝑐^2  ⋅ 𝑣 ̂_𝑡))= 〗 𝑚 ̂_𝑡∕√(𝑣 ̂_𝑡 )
+$$(𝑐 ⋅ 𝑚 ̂_𝑡)〗∕〖√((𝑐^2  ⋅ 𝑣 ̂_𝑡))= 〗 𝑚 ̂_𝑡∕√(𝑣 ̂_𝑡)$$
 
 This means that, no matter what scale your inputs are, Adam will take the same step size – only 𝛼 affects the step size
 
 Now we can finally update our parameter values!
 
-𝜃_𝑡=𝜃_(𝑡 −1)−〖𝛼_𝑡  ⋅ 𝑚 ̂_𝑡〗∕〖(√(𝑣 ̂_𝑡 )+𝜀)〗
+$${\theta _𝑡} = {\theta _{𝑡 −1}} − {\alpha _t}  ⋅ \frac{\hat{𝑚_𝑡}}{\sqrt{\hat{𝑣_𝑡}} + \epsilon}$$
 
 (𝜀 is there to prevent dividing by 0)
 
