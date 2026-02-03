@@ -31,6 +31,9 @@ $$𝑣_𝑡= 𝛽_2 ⋅ 𝑣_{𝑡−1} + (1 − {\beta_2})⋅ 𝑔_𝑡^2$$
 
 <img width="1174" height="388" alt="image" src="https://github.com/user-attachments/assets/0fe0afe2-7d66-403a-b7de-d3dbe29195a7" />
 
+What is this uncentered variance that the second moment is using? It’s the 'variance' of the gradient. Think of it as encoding how the gradient is changing locally, like the curvature of a function.
+
+
 ## Decay Rate
 
 The βs (decay rates) give more weight to recent gradients. Typically, $\beta_1$ is set to 0.99, while $\beta_2$ is set to 0.999. We can see more clearly how the recency weighting works if we expand what's happening during each time step. We start here:
