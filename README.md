@@ -99,7 +99,19 @@ The change in our step size at time t is:
 
 $${\Delta_𝑡} = \alpha ⋅ \frac{\hat{𝑚_𝑡}}{\sqrt{\hat{𝑣_𝑡}}}$$
 
-, where 𝛼 is a “maximum” step size parameter. If you want to take N steps to the optimum that is D distance away, then $\alpha \approx \frac{𝐷}{𝑁}$
+, where 𝛼 is a "maximum" step size parameter. If you want to take N steps to the optimum that is D distance away, then $\alpha \approx \frac{𝐷}{𝑁}$
+
+<br>
+
+## Step Size Bounding
+
+The effective step sizes are approximately bound to the step size hyperparameter. They are bounded by relating the decay rates:
+
+$$|\Delta_t| \leq \alpha  ⋅ \frac{1 - \beta_1}{\sqrt{1 - \beta_2}}, \qquad \text{if }  (1 - \beta_1) \gt \sqrt{1 - \beta_2}$$   
+  
+<p align="center">$$|\Delta_t| \leq \alpha, \qquad \text{if }  (1 - \beta_1) \leq \sqrt{1 - \beta_2}$$          
+
+This keeps us from taking too large of a step and overshooting and destabilizing our optimization. 
 
 <br>
 
@@ -117,18 +129,11 @@ If the Adam Optimizer is invariable to gradient scaling, does normalizing the da
 
 <img width="1000" height="471" alt="image" src="https://github.com/user-attachments/assets/40d50f69-9e87-4009-8ac3-f61fb48d7f3a" /> 
 
+<br>
 
-The effective step sizes are approximately bound to the step size hyperparameter. They are bounded by relating the decay rates:
+## Sparsity
 
-$$|\Delta_t| \leq \alpha  ⋅ \frac{1 - \beta_1}{\sqrt{1 - \beta_2}}, \qquad \text{if }  (1 - \beta_1) \gt \sqrt{1 - \beta_2}$$   
-  
-<p align="center">$$|\Delta_t| \leq \alpha, \qquad \text{if }  (1 - \beta_1) \leq \sqrt{1 - \beta_2}$$          
-
-This keeps us from taking too large of a step and overshooting and destabilizing our optimization. 
-
-Severe sparsity happens when a gradient has been zero at all timesteps except at the current timestep. Below is a plot which shows the "break point" between $\beta s$ that result in the first case versus $\beta s$ that result in the second case.
-
-<img width="933" height="716" alt="image" src="https://github.com/user-attachments/assets/a13403cc-6477-419d-b911-4d720a19c1c1" />
+Severe sparsity happens when a gradient has been zero at all timesteps except at the current timestep. 
 
 
 <br>
