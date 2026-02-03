@@ -126,11 +126,10 @@ $$|\Delta_t| \leq \alpha  ⋅ \frac{1 - \beta_1}{\sqrt{1 - \beta_2}}, \qquad \te
 
 This keeps us from taking too large of a step and overshooting and destabilizing our optimization. 
 
-This constraint also helps us deal with sparse gradients, though it's indirectly. Severe sparsity happens when a gradient has been zero at all timesteps except at the current timestep. The $(1 − \beta_1)$ vs $\sqrt(1 − \beta_2)$ comparison only sets what a reasonable upper bound of our step size should be depending on the decay rates. If we do get a large step due to a sparse gradient, this just helps us rein it into a more reasonable value. Below is a plot which shows the "break point" between $\beta s$ that result in the first case versus $\beta s$ that result in the second case.
+Severe sparsity happens when a gradient has been zero at all timesteps except at the current timestep. Below is a plot which shows the "break point" between $\beta s$ that result in the first case versus $\beta s$ that result in the second case.
 
 <img width="933" height="716" alt="image" src="https://github.com/user-attachments/assets/a13403cc-6477-419d-b911-4d720a19c1c1" />
 
-For example, say a gradient has had a value of 0 for 999 steps and then gets a gradient of 1 at timestep 1000. 𝛽_1 is 0.900 and 𝛽_2 is 0.999. What is supposed to be the update to the step size? What is the maximum allowed value of step size in this scenario? What if instead, $\beta_1$ = 0.990?
 
 <br>
 
